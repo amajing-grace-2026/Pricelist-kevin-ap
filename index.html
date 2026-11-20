@@ -116,7 +116,7 @@ function res(){const r=flt();$('#cnt').textContent=`Menampilkan ${Math.min(S.lim
 function seOpts(){const s=[...new Set(D.filter(x=>!S.src||x.s===S.src).map(x=>x.se))].sort();$('#se').innerHTML='<option value="">Semua seri</option>'+s.map(v=>`<option>${esc(v)}</option>`).join('');S.se='';}
 function cmpv(){const it=S.cmp.map(i=>D[i]);$('#nc').textContent=it.length;
  if(it.length<2){$('#cmpv').innerHTML='<p class="empty">Pilih 2 sampai 3 laptop dengan kotak “Bandingkan” di tab Katalog atau Saran.</p>'+(it.length?`<p class="empty">Terpilih: ${esc(it[0].m)}</p>`:'');return;}
- let R=[['Seri',x=>x.se],['Part No',x=>x.p],['Status',x=>x.st],...COLS.map(c=>[c[1],x=>rp(x[c[0]]),c[0]]),['CPU',x=>x.c],['GPU',x=>x.g],['RAM',x=>x.r?x.r+' GB':''],['SSD',x=>ssdT(x.d)],['Layar',x=>x.l],['OS',x=>x.o],['Spek',x=>x.k?x.k[2][1]:'']];
+ let R=[['Seri',x=>x.se],['Part No',x=>x.p],['Status',x=>x.st],...COLS.filter(c=>it.some(x=>c[0] in x)).map(c=>[c[1],x=>rp(x[c[0]]),c[0]]),['CPU',x=>x.c],['GPU',x=>x.g],['RAM',x=>x.r?x.r+' GB':''],['SSD',x=>ssdT(x.d)],['Layar',x=>x.l],['OS',x=>x.o],['Spek',x=>x.k?x.k[2][1]:'']];
  R=R.filter(r=>r[2]||it.some(x=>String(r[1](x)).trim()));
  if(S.full){const k=[];it.forEach(x=>x.f.forEach(p=>{if(!k.includes(p[0]))k.push(p[0])}));k.forEach(n=>R.push([n,x=>(x.f.find(p=>p[0]===n)||[])[1]||'']));}
  const lo=Math.min(...it.map(x=>x.sr||1e13));
